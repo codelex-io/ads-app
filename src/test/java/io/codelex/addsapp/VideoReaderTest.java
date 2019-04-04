@@ -32,10 +32,9 @@ public class VideoReaderTest {
     @Test
     public void should_return_list_of_video_names() {
         //given
-        File[] files = new File(String.valueOf(testDir)).listFiles();
+        File file = new File(String.valueOf(testDir));
         //when
-        assert files != null;
-        List<String> result = videoReader.inputVideos(files);
+        List<String> result = videoReader.inputVideos(file);
         //then
         assertFalse(result.isEmpty());
     }
@@ -43,11 +42,10 @@ public class VideoReaderTest {
     @Test
     public void should_add_only_id_to_list() {
         //given
-        File[] files = new File(String.valueOf(testDir)).listFiles();
+        File file = new File(String.valueOf(testDir));
         //when
-        assert files != null;
-        List<String> result = videoReader.inputVideos(files);
+        List<String> result = videoReader.inputVideos(file);
         //then
-        assertTrue(result.get(0).matches("[M]{1}[0-9]{5}"));
+        assertTrue(result.get(0).matches("[M][0-9]{5}"));
     }
 }
