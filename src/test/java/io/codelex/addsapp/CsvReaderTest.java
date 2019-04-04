@@ -1,7 +1,5 @@
 package io.codelex.addsapp;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
 import org.junit.Test;
 
 import java.io.File;
@@ -18,7 +16,9 @@ import static org.junit.Assert.*;
 public class CsvReaderTest {
 
     private final File file = new File("./src/test/resources/test_file.csv");
-    
+
+    private CsvReader csvReader = new CsvReader();
+
     @Test
     public void should_return_true_if_csv_file_found() {
         //then
@@ -34,29 +34,19 @@ public class CsvReaderTest {
         assertFalse(file.exists());
 
     }
-    
+
     @Test
     public void should_parse_test_file() throws IOException {
         //given
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource("test_file.csv").getFile());
+        Reader reader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"));
         //when
-        Reader reader = Files.newBufferedReader(Paths.get(file.getAbsolutePath()));
-
-        CsvToBean<Ad> csvToBean = new CsvToBeanBuilder<Ad>(reader)
-                .withType(Ad.class)
-                .withIgnoreLeadingWhiteSpace(true)
-                .withSkipLines(1)
-                .build();
-
-        List<Ad> ads = csvToBean.parse();
-        
+        List<Ad> ads = csvReader.parseCsv(reader);
         //then
         assertEquals(LocalDate.of(2019, 4, 1), ads.get(0).getDate());
         assertEquals(LocalTime.of(6, 0), ads.get(0).getProgramStart());
         assertEquals(180, ads.get(0).getBreakMinutes());
-        assertTrue(ads.get(0).getAdvertisingName().matches("[M]{1}[0-9]{5}"));
-        
+        assertTrue(ads.get(0).getAdvertisingName().matches("[M][0-9]{5}"));
+
     }
-      
+
 }
