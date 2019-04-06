@@ -53,6 +53,7 @@ public class CsvReaderTest {
     public void should_parse_local_file() throws IOException {
         //given
         Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/Playlist_ReTV010419_generated280320190336.csv"));
+//        Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/test_file.csv"));
         //when
         List<Ad> ads = csvReader.parseCsv(reader);
         //then
@@ -60,9 +61,6 @@ public class CsvReaderTest {
         assertEquals(LocalTime.of(6, 0), ads.get(0).getProgramStart());
         assertEquals(180, ads.get(0).getBreakMinutes());
         assertTrue(ads.get(0).getAdvertisingName().matches("[M][0-9]{5}"));
-
     }
     
-    
-
 }

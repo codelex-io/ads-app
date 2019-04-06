@@ -11,8 +11,8 @@ import java.util.List;
 @Component
 public class CsvReader {
 
-   public List<Ad> parseCsv(Reader reader) throws IOException {
-
+   public List<Ad> parseCsv(Reader reader) {
+       
         CsvToBean<Ad> csvToBean = new CsvToBeanBuilder<Ad>(reader)
                 .withType(Ad.class)
                 .withIgnoreLeadingWhiteSpace(true)
@@ -22,4 +22,8 @@ public class CsvReader {
         return csvToBean.parse();
     }
 }
-
+/*public void captureHeader(CSVReader reader){
+    super.captureHeader(reader);
+    List<String> csvHeader = Arrays.asList(header);
+    //iterate through the list
+    }*/
