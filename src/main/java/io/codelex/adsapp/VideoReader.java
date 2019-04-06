@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import java.io.File;
 import java.util.ArrayList;

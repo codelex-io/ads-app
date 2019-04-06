@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +17,8 @@ public class VideoReaderTest {
     private VideoReader videoReader = new VideoReader();
 
     private Path testDir;
+
+    private CsvReader csvReader = new CsvReader();
 
     @Before
     public void setUp() throws Exception {

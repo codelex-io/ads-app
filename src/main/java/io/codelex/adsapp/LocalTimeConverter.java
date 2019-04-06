@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import com.opencsv.bean.AbstractBeanField;
 import com.opencsv.exceptions.CsvConstraintViolationException;
