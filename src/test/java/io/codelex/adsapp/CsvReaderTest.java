@@ -52,8 +52,7 @@ public class CsvReaderTest {
     @Test
     public void should_parse_local_file() throws IOException {
         //given
-        Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/Playlist_ReTV010419_generated280320190336.csv"));
-//        Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/test_file.csv"));
+        Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/xxx.csv"));
         //when
         List<Ad> ads = csvReader.parseCsv(reader);
         //then

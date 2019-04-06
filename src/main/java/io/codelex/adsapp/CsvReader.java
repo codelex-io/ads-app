@@ -22,8 +22,4 @@ public class CsvReader {
         return csvToBean.parse();
     }
 }
-/*public void captureHeader(CSVReader reader){
-    super.captureHeader(reader);
-    List<String> csvHeader = Arrays.asList(header);
-    //iterate through the list
-    }*/
+

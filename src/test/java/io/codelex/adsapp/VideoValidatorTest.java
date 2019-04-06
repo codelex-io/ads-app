@@ -18,9 +18,10 @@ public class VideoValidatorTest {
         List<Ad> ads = Arrays.asList(new Ad(LocalDate.of(2019,4,1), LocalTime.of(6,30), 30, "M11016"));
         List<String> vidId = Arrays.asList("M11016");
 
-        List<ValidationError> results = videoValidator.validate(ads, vidId);
+        List<ValidationStatus> results = videoValidator.validate(ads, vidId);
 
-        Assertions.assertTrue(results.isEmpty());
+        Assertions.assertEquals(1, results.size());
+        Assertions.assertEquals("Successful", results.get(0).getMessage());
     }
 
     @Test
@@ -29,10 +30,10 @@ public class VideoValidatorTest {
         List<Ad> ads = Arrays.asList(new Ad(LocalDate.of(2019,4,1), LocalTime.of(6,30), 30, "M11016"));
         List<String> vidId = Arrays.asList("M11816");
 
-        List<ValidationError> results = videoValidator.validate(ads, vidId);
+        List<ValidationStatus> results = videoValidator.validate(ads, vidId);
 
         Assertions.assertEquals(1, results.size());
-        Assertions.assertEquals( "06:30 Not found M11016", results.get(0).getErrorMessage());
+        Assertions.assertEquals("06:30 Not found M11016", results.get(0).getMessage());
     }
 
     @Test
@@ -43,7 +44,7 @@ public class VideoValidatorTest {
         
         List<String> vidId = new ArrayList<>();
 
-        List<ValidationError> results = videoValidator.validate(ads, vidId);
+        List<ValidationStatus> results = videoValidator.validate(ads, vidId);
 
         Assertions.assertEquals(2, results.size());
     }

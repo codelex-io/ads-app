@@ -1,5 +1,7 @@
 package io.codelex.adsapp;
 
+import org.springframework.stereotype.Component;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public class VideoReader {
 
     public List<String> inputVideos(File directory) {
