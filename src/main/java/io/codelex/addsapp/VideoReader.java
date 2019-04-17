@@ -11,6 +11,7 @@ public class VideoReader {
 
     public List<String> inputVideos(File directory) {
         File[] files = directory.listFiles();
+        assert files != null;
         List<String> results = new ArrayList<>();
         for (File file : Objects.requireNonNull(files)) {
             if (file.isFile()) {

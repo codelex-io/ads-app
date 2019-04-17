@@ -1,26 +1,29 @@
 package io.codelex.addsapp;
 
-import com.opencsv.bean.CsvToBean;
-import com.opencsv.bean.CsvToBeanBuilder;
+import com.opencsv.exceptions.CsvConstraintViolationException;
+import com.opencsv.exceptions.CsvDataTypeMismatchException;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.util.List;
+import java.util.ArrayList;
 
 public class CsvReader {
+    
+    public static ArrayList<String> parseCsv(String myCsv) throws
+            CsvDataTypeMismatchException, 
+            CsvConstraintViolationException {
+        AdvertisingNameConverter converter = new AdvertisingNameConverter();
 
-   public List<Ad> parseCsv(Reader reader) throws IOException {
+        ArrayList<String> ads = new ArrayList<>();
 
-
-        CsvToBean<Ad> csvToBean = new CsvToBeanBuilder<Ad>(reader)
-                .withType(Ad.class)
-                .withIgnoreLeadingWhiteSpace(true)
-                .withSkipLines(1)
-                .build();
-
-        return csvToBean.parse();
-
+        if (myCsv != null) {
+            String[] splitData = myCsv.split("\\s*,\\s*");
+            for (String split : splitData) {
+                assert split != null;
+                if (split.contains("Lcom_M")) {
+                    split = (String) converter.convert(split);
+                }
+                ads.add(split.trim());
+            }
+        }
+        return ads;
     }
-
 }
-

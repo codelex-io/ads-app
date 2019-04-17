@@ -1,39 +1,59 @@
 package io.codelex.addsapp;
 
-import com.opencsv.bean.CsvBindByPosition;
-import com.opencsv.bean.CsvCustomBindByPosition;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Ad {
 
-    @CsvCustomBindByPosition(position = 0, converter = LocalDateConverter.class)
     private LocalDate date;
-
-    @CsvCustomBindByPosition(position = 1, converter = LocalTimeConverter.class)
     private LocalTime programStart;
-
-    @CsvBindByPosition(position = 3)
     private int breakMinutes;
-
-    @CsvCustomBindByPosition(position = 4, converter = AdvertisingNameConverter.class)
     private String advertisingName;
 
-    LocalDate getDate() {
+    public Ad(LocalDate date, LocalTime programStart,
+              int breakMinutes, String advertisingName) {
+        super();
+        this.date = date;
+        this.programStart = programStart;
+        this.breakMinutes = breakMinutes;
+        this.advertisingName = advertisingName;
+    }
+
+    public LocalDate getDate() {
         return date;
     }
 
-    LocalTime getProgramStart() {
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getProgramStart() {
         return programStart;
     }
 
-    int getBreakMinutes() {
+    public void setProgramStart(LocalTime programStart) {
+        this.programStart = programStart;
+    }
+
+    public int getBreakMinutes() {
         return breakMinutes;
     }
 
-    String getAdvertisingName() {
+    public void setBreakMinutes(int breakMinutes) {
+        this.breakMinutes = breakMinutes;
+    }
+
+    public String getAdvertisingName() {
         return advertisingName;
     }
 
+    public void setAdvertisingName(String advertisingName) {
+        this.advertisingName = advertisingName;
+    }
+
+    @Override
+    public String toString() {
+        return "Ad [date=" + date + ", programStart=" + programStart
+                + ", breakMinutes=" + breakMinutes + ", advertisingName=" + advertisingName + "]";
+    }    
 }
