@@ -45,5 +45,4 @@ public class Ad {
     String getAdvertisingName() {
         return advertisingName;
     }
-
 }

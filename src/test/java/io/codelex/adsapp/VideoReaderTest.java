@@ -18,8 +18,6 @@ public class VideoReaderTest {
 
     private Path testDir;
 
-    private CsvReader csvReader = new CsvReader();
-
     @Before
     public void setUp() throws Exception {
         testDir = Files.createTempDirectory("ads_test");

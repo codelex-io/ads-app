@@ -52,7 +52,7 @@ public class CsvReaderTest {
     @Test
     public void should_parse_local_file() throws IOException {
         //given
-        Reader reader = Files.newBufferedReader(Paths.get("/home/nils/Downloads/xxx.csv"));
+        Reader reader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"));
         //when
         List<Ad> ads = csvReader.parseCsv(reader);
         //then
