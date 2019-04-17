@@ -1,16 +1,14 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
 public class CsvReader {
 
-   public List<Ad> parseCsv(Reader reader) throws IOException {
-
+    public List<Ad> parseCsv(Reader reader) {
 
         CsvToBean<Ad> csvToBean = new CsvToBeanBuilder<Ad>(reader)
                 .withType(Ad.class)
@@ -19,8 +17,6 @@ public class CsvReader {
                 .build();
 
         return csvToBean.parse();
-
     }
-
 }
 

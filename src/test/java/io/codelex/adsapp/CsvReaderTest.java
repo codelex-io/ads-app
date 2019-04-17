@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import org.junit.Test;
 
@@ -49,4 +49,17 @@ public class CsvReaderTest {
 
     }
 
+    @Test
+    public void should_parse_local_file() throws IOException {
+        //given
+        Reader reader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"));
+        //when
+        List<Ad> ads = csvReader.parseCsv(reader);
+        //then
+        assertEquals(LocalDate.of(2019, 4, 1), ads.get(0).getDate());
+        assertEquals(LocalTime.of(6, 0), ads.get(0).getProgramStart());
+        assertEquals(180, ads.get(0).getBreakMinutes());
+        assertTrue(ads.get(0).getAdvertisingName().matches("[M][0-9]{5}"));
+    }
+    
 }

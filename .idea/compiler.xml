@@ -12,8 +12,8 @@
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel>
-      <module name="adds-app.main" target="11" />
-      <module name="adds-app.test" target="11" />
+      <module name="adds-app.main" target="1.8" />
+      <module name="adds-app.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

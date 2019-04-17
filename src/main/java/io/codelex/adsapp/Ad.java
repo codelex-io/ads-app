@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.CsvCustomBindByPosition;
@@ -20,6 +20,16 @@ public class Ad {
     @CsvCustomBindByPosition(position = 4, converter = AdvertisingNameConverter.class)
     private String advertisingName;
 
+    public Ad() {
+    }
+
+    public Ad(LocalDate date, LocalTime programStart, int breakMinutes, String advertisingName) {
+        this.date = date;
+        this.programStart = programStart;
+        this.breakMinutes = breakMinutes;
+        this.advertisingName = advertisingName;
+    }
+
     LocalDate getDate() {
         return date;
     }
@@ -35,5 +45,4 @@ public class Ad {
     String getAdvertisingName() {
         return advertisingName;
     }
-
 }
