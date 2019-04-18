@@ -1,24 +1,38 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import com.opencsv.exceptions.CsvConstraintViolationException;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
+import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-import static io.codelex.addsapp.CsvReader.parseCsv;
+import static io.codelex.adsapp.CsvReader.parseCsv;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DirectoryCreator {
+public class DirectoryCreatorTest {
 
-    public void createDirectories(File directory, BufferedReader bufferedReader) throws CsvDataTypeMismatchException, CsvConstraintViolationException {
+    private Path testDir = Files.createTempDirectory("directories");
+    private BufferedReader bufferedReader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"), StandardCharsets.UTF_8);
+
+    public DirectoryCreatorTest() throws IOException {
+    }
+
+
+    @Test
+    public void should_create_directories_and_subdirectories_and_skip_if_present() throws CsvDataTypeMismatchException, CsvConstraintViolationException {
+        //when
         try {
             bufferedReader.readLine();
 
             String parsedLine = bufferedReader.readLine();
             String dateFromCsv = parseCsv(parsedLine).get(0);
-            File parentDirectory = new File(directory
+            File parentDirectory = new File(testDir
                     + dateFromCsv);
             boolean wasSuccessful = parentDirectory.mkdir();
-
             if (!wasSuccessful) {
                 return;
             }
@@ -36,6 +50,8 @@ public class DirectoryCreator {
                         return;
                     }
                 }
+                //then
+                assertTrue(subDirectory.exists());
             }
         } catch (IOException e) {
             e.printStackTrace();

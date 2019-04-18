@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

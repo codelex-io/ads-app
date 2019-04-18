@@ -1,4 +1,4 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
 import org.junit.Before;
 import org.junit.Test;

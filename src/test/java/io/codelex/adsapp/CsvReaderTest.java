@@ -1,11 +1,9 @@
-package io.codelex.addsapp;
+package io.codelex.adsapp;
 
-import com.opencsv.exceptions.CsvConstraintViolationException;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -30,9 +28,10 @@ public class CsvReaderTest {
     }
 
     @Test
-    public void should_parse_test_file() throws CsvDataTypeMismatchException, CsvConstraintViolationException {
+    public void should_parse_test_file() {
         //when
-        ArrayList<String> ads = CsvReader.parseCsv("14.04.19.,06:00:00,Latvijas st�sti (arh�vs) - 1,265,Lcom_M09803_Septanazal sep 15sek LV,00:15,1");
+        List<String> ads = CsvReader.parseCsv("14.04.19.,06:00:00,Latvijas st�sti (arh�vs) - 1,265,Lcom_M09803_Septanazal sep 15sek LV,00:15,1");
+
         //then
         assertEquals("14.04.19.", ads.get(0));
         assertEquals("06:00:00", ads.get(1));

@@ -1,18 +1,14 @@
-package io.codelex.addsapp;
-
-import com.opencsv.exceptions.CsvConstraintViolationException;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
+package io.codelex.adsapp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CsvReader {
-    
-    public static ArrayList<String> parseCsv(String myCsv) throws
-            CsvDataTypeMismatchException, 
-            CsvConstraintViolationException {
+
+    public static List<String> parseCsv(String myCsv) {
         AdvertisingNameConverter converter = new AdvertisingNameConverter();
 
-        ArrayList<String> ads = new ArrayList<>();
+        List<String> ads = new ArrayList<>();
 
         if (myCsv != null) {
             String[] splitData = myCsv.split("\\s*,\\s*");
@@ -22,6 +18,7 @@ public class CsvReader {
                     split = (String) converter.convert(split);
                 }
                 ads.add(split.trim());
+                System.out.println(ads.get(0));
             }
         }
         return ads;
