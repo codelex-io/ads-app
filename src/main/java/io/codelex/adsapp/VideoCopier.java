@@ -32,9 +32,9 @@ public class VideoCopier {
                         collect = pathStream.collect(Collectors.toList());
 
                         assert vidPath != null;
-
+                        outputPath = collect.get(0).toString() + "/" + file.getName();
                     }
-                    outputPath = collect.get(0).toString() + file.getName();
+                    
                 }
             }
 
