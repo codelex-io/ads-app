@@ -19,6 +19,7 @@ public class Ui {
     private VideoReader videoReader = new VideoReader();
     private VideoValidator videoValidator = new VideoValidator();
     private DirectoryCreator directoryCreator = new DirectoryCreator();
+    private VideoCopier videoCopier = new VideoCopier();
 
     public void startApplication(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -96,6 +97,7 @@ public class Ui {
                         success.setHeaderText("Successful \nCopying");
                         success.showAndWait();
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
+                        videoCopier.videoCopier(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads);
                         
                     }
 
