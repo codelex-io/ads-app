@@ -18,6 +18,7 @@ public class Ui {
     private CsvReader csvReader = new CsvReader();
     private VideoReader videoReader = new VideoReader();
     private VideoValidator videoValidator = new VideoValidator();
+    private DirectoryCreator directoryCreator = new DirectoryCreator();
 
     public void startApplication(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -94,6 +95,7 @@ public class Ui {
                         Alert success = new Alert(Alert.AlertType.INFORMATION);
                         success.setHeaderText("Successful \nCopying");
                         success.showAndWait();
+                        directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         
                     }
 

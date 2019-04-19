@@ -32,8 +32,8 @@ class MainController {
         this.txtVidPath = txtVidPath;
     }
 
-    TextField getTxtDirectoryPath() {
-        return txtDirectoryPath;
+    File getTxtDirectoryPath() {
+        return new File(txtDirectoryPath.getText());
     }
 
     void setTxtDirectoryPath(TextField txtDirectoryPath) {
