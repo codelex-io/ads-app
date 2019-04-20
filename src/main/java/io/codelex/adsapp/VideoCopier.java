@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +18,7 @@ public class VideoCopier {
 
         for (Ad ad : ads) {
             String adId = ad.getAdvertisingName();
-            String startTime = ad.getProgramStart().toString();
+            String startTime = ad.getProgramStart();
             assert files != null;
             List<Path> collect;
             for (File file : files) {

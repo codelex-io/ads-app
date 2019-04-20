@@ -9,13 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-class MainController {
-    
+public class MainController {
+
     private TextField txtCsvPath;
     private TextField txtVidPath;
     private TextField txtDirectoryPath;
 
-    Reader getTxtCsvPath() throws IOException {
+    public Reader getTxtCsvPath() throws IOException {
         Path csvPath = Paths.get(txtCsvPath.getText());
         return Files.newBufferedReader(csvPath);
     }

@@ -82,7 +82,7 @@ public class Ui {
                 fail.showAndWait();
             } else {
                 try {
-                    List<Ad> ads = csvReader.parseCsv(mainController.getTxtCsvPath());
+                    List<Ad> ads = csvReader.parseCsv();
                     List<String> vid = videoReader.inputVideos(mainController.getTxtVidPath());
                     String errorList = videoValidator.validate(ads, vid).stream().map(ValidationStatus::getMessage).collect(Collectors.joining("\n"));
                     if (!errorList.isEmpty()) {
@@ -110,7 +110,7 @@ public class Ui {
         GridPane.setConstraints(start, 0, 6);
         grid.getChildren().add(start);
 
-        Scene scene = new Scene(grid, 410, 200);
+        Scene scene = new Scene(grid, 410, 240);
         primaryStage.setTitle("Ads app");
         primaryStage.setScene(scene);
         primaryStage.show();

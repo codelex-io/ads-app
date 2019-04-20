@@ -14,6 +14,8 @@
     <bytecodeTargetLevel>
       <module name="adds-app.main" target="1.8" />
       <module name="adds-app.test" target="1.8" />
+      <module name="io.codelex.adds-app.main" target="1.8" />
+      <module name="io.codelex.adds-app.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
