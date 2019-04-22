@@ -29,21 +29,5 @@ public class Ad {
     String getAdvertisingName() {
         return advertisingName;
     }
-
-    void setDate(String date) {
-        this.date = date;
-    }
-
-    void setProgramStart(String programStart) {
-        this.programStart = programStart;
-    }
-
-    void setBreakMinutes(String breakMinutes) {
-        this.breakMinutes = breakMinutes;
-    }
-
-    void setAdvertisingName(String advertisingName) {
-        this.advertisingName = advertisingName;
-    }
-
+    
 }

@@ -1,7 +1,5 @@
 package io.codelex.adsapp;
 
-import io.codelex.adsapp.ui.MainController;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -32,7 +30,7 @@ public class CsvReader {
                 String[] splitValues = line.split(DELIMITER);
 
                 String date = splitValues[0];
-                String programStart = splitValues[1].substring(0, splitValues[1].length() - 3);
+                String programStart = splitValues[1].substring(0, splitValues[1].length() - 3).replace(":", "-");
                 String breakMinutes = splitValues[3];
                 String advertisingName = (String) converter.convert(splitValues[4]);
 

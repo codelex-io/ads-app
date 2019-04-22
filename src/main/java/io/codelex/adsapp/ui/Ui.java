@@ -36,7 +36,6 @@ public class Ui {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv Files", "*.csv"));
             File selectedCsvDirectory = fileChooser.showOpenDialog(primaryStage);
             csvFile.setText(selectedCsvDirectory.getAbsolutePath());
-            mainController.setTxtCsvPath(csvFile);
         });
 
         GridPane.setConstraints(csvLabel, 0, 0);
@@ -94,14 +93,15 @@ public class Ui {
                         error.showAndWait();
                     } else {
                         Alert success = new Alert(Alert.AlertType.INFORMATION);
-                        success.setHeaderText("Successful \nCopying");
+                        success.setHeaderText("Copying");
+                        success.setContentText(null);
                         success.showAndWait();
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         videoCopier.videoCopier(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads);
                         
                     }
 
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
