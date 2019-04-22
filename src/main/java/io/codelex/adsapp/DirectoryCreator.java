@@ -9,14 +9,14 @@ public class DirectoryCreator {
 
         String created = "";
         int id = 1;
-        String parentDirName = ads.get(0).getDate().toString();
+        String parentDirName = ads.get(0).getDate();
         File parentFile = new File(directory + "/" + parentDirName);
         parentFile.mkdir();
 
         for (Ad ad : ads) {
-            String dirNameStartTime = ad.getProgramStart().toString();
+            String dirNameStartTime = ad.getProgramStart();
             String dirNameAdsBreakTime = String.valueOf(ad.getBreakMinutes());
-            if(!created.equals(dirNameStartTime)) {
+            if (!created.equals(dirNameStartTime)) {
                 new File(parentFile.getAbsolutePath() + "/" + id + "_" + dirNameStartTime + "(" + dirNameAdsBreakTime + ")").mkdirs();
                 created = dirNameStartTime;
                 id++;

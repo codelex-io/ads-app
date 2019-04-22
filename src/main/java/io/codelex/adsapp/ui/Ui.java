@@ -36,7 +36,6 @@ public class Ui {
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv Files", "*.csv"));
             File selectedCsvDirectory = fileChooser.showOpenDialog(primaryStage);
             csvFile.setText(selectedCsvDirectory.getAbsolutePath());
-            mainController.setTxtCsvPath(csvFile);
         });
 
         GridPane.setConstraints(csvLabel, 0, 0);
@@ -82,7 +81,7 @@ public class Ui {
                 fail.showAndWait();
             } else {
                 try {
-                    List<Ad> ads = csvReader.parseCsv(mainController.getTxtCsvPath());
+                    List<Ad> ads = csvReader.parseCsv(csvFile.getText());
                     List<String> vid = videoReader.inputVideos(mainController.getTxtVidPath());
                     String errorList = videoValidator.validate(ads, vid).stream().map(ValidationStatus::getMessage).collect(Collectors.joining("\n"));
                     if (!errorList.isEmpty()) {
@@ -94,14 +93,15 @@ public class Ui {
                         error.showAndWait();
                     } else {
                         Alert success = new Alert(Alert.AlertType.INFORMATION);
-                        success.setHeaderText("Successful \nCopying");
+                        success.setHeaderText("Copying");
+                        success.setContentText(null);
                         success.showAndWait();
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         videoCopier.videoCopier(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads);
                         
                     }
 
-                } catch (IOException e) {
+                } catch (IOException | InterruptedException e) {
                     e.printStackTrace();
                 }
             }
@@ -110,7 +110,7 @@ public class Ui {
         GridPane.setConstraints(start, 0, 6);
         grid.getChildren().add(start);
 
-        Scene scene = new Scene(grid, 410, 200);
+        Scene scene = new Scene(grid, 410, 240);
         primaryStage.setTitle("Ads app");
         primaryStage.setScene(scene);
         primaryStage.show();

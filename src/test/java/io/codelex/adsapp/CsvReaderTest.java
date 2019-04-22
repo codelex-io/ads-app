@@ -40,7 +40,7 @@ public class CsvReaderTest {
         //given
         Reader reader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"));
         //when
-        List<Ad> ads = csvReader.parseCsv(reader);
+        List<Ad> ads = csvReader.parseCsv(reader.toString());
         //then
         assertEquals(LocalDate.of(2019, 4, 1), ads.get(0).getDate());
         assertEquals(LocalTime.of(6, 0), ads.get(0).getProgramStart());
@@ -54,7 +54,7 @@ public class CsvReaderTest {
         //given
         Reader reader = Files.newBufferedReader(Paths.get("./src/test/resources/test_file.csv"));
         //when
-        List<Ad> ads = csvReader.parseCsv(reader);
+        List<Ad> ads = csvReader.parseCsv(reader.toString());
         //then
         assertEquals(LocalDate.of(2019, 4, 1), ads.get(0).getDate());
         assertEquals(LocalTime.of(6, 0), ads.get(0).getProgramStart());
