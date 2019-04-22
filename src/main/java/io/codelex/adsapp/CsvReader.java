@@ -16,15 +16,11 @@ public class CsvReader {
         ads = new ArrayList<>();
     }
 
-    public List<Ad> parseCsv() throws IOException {
+    public List<Ad> parseCsv(String csvPath) {
 
-        MainController mainController = new MainController();
         AdvertisingNameConverter converter = new AdvertisingNameConverter();
 
         BufferedReader fileReader = null;
-
-        String csvPath = "C:\\Users\\davis\\Documents\\tessst\\test_file.csv";
-//        String csvPath = mainController.getTxtCsvPath().toString();
 
         final String DELIMITER = ",";
         try {

@@ -24,7 +24,7 @@ public class VideoCopier {
             for (File file : files) {
                 if (file.getName().contains(adId)) {
                     vidPath = Paths.get(file.getAbsolutePath());
-                    
+
                     try (Stream<Path> pathStream = Files.find(output.toPath(),
                             2,
                             (path, basicFileAttributes) -> path.getFileName().toString().contains(startTime))) {
@@ -33,7 +33,7 @@ public class VideoCopier {
                         assert vidPath != null;
                         outputPath = collect.get(0).toString() + "/" + file.getName();
                     }
-                    
+
                 }
             }
 

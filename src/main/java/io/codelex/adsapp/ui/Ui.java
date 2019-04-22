@@ -82,7 +82,7 @@ public class Ui {
                 fail.showAndWait();
             } else {
                 try {
-                    List<Ad> ads = csvReader.parseCsv();
+                    List<Ad> ads = csvReader.parseCsv(csvFile.getText());
                     List<String> vid = videoReader.inputVideos(mainController.getTxtVidPath());
                     String errorList = videoValidator.validate(ads, vid).stream().map(ValidationStatus::getMessage).collect(Collectors.joining("\n"));
                     if (!errorList.isEmpty()) {
