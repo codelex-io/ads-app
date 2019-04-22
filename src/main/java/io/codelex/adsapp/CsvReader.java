@@ -17,6 +17,7 @@ public class CsvReader {
     public List<Ad> parseCsv(String csvPath) {
 
         AdvertisingNameConverter converter = new AdvertisingNameConverter();
+        BreakMinuteConverter breakMinuteConverter = new BreakMinuteConverter();
 
         BufferedReader fileReader = null;
 
@@ -31,7 +32,7 @@ public class CsvReader {
 
                 String date = splitValues[0];
                 String programStart = splitValues[1].substring(0, splitValues[1].length() - 3).replace(":", "-");
-                String breakMinutes = splitValues[3];
+                String breakMinutes = breakMinuteConverter.breakTimeInMinutes(splitValues[3]);
                 String advertisingName = (String) converter.convert(splitValues[4]);
 
                 Ad ad = new Ad(date, programStart, breakMinutes, advertisingName);
