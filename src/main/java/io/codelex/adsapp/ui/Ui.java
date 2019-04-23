@@ -93,12 +93,11 @@ public class Ui {
                         error.showAndWait();
                     } else {
                         Alert success = new Alert(Alert.AlertType.INFORMATION);
-                        success.setHeaderText("Copying");
+                        success.setHeaderText("Copying...");
                         success.setContentText(null);
-                        success.showAndWait();
+                        success.show();
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         videoCopier.videoCopier(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads);
-                        
                     }
 
                 } catch (IOException | InterruptedException e) {
