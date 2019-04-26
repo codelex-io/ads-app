@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adds-app.iml" filepath="$PROJECT_DIR$/.idea/modules/adds-app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adds-app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/adds-app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/adds-app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/adds-app.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.iml" filepath="$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/io.codelex.adds-app.test.iml" />
     </modules>
   </component>
 </project>

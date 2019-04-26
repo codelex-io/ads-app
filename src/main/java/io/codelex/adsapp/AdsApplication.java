@@ -10,7 +10,7 @@ public class AdsApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        ui.startApplication(stage);
+        ui.start(stage);
     }
        
     public static void main(String[] args) {
