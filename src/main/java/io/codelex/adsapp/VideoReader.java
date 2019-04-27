@@ -21,7 +21,7 @@ public class VideoReader {
                 Matcher matcher = pattern.matcher(vid);
 
                 if (matcher.find()) {
-                    results.add(matcher.group());
+                    results.add(matcher.group().trim());
                 }
             }
         }

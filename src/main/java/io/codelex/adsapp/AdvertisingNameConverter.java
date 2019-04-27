@@ -12,7 +12,7 @@ public class AdvertisingNameConverter extends AbstractBeanField {
         Pattern pattern = Pattern.compile("(?<=_)(M.*?)(?=_)");
         Matcher matcher = pattern.matcher(value);
         if (matcher.find()) {
-            return matcher.group();
+            return matcher.group().trim();
         }
         return value;
     }
