@@ -112,9 +112,12 @@ public class Ui {
                     error.showAndWait();
                 } else {
                     Thread thread = new Thread(() -> {
-                        actionIndicator.setText("Copying videos...");
+                        browseCsv.setDisable(true);
+                        browseVideo.setDisable(true);
+                        browseFile.setDisable(true);
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         try {
+                            actionIndicator.setText("Copying videos...");
                             videoCopier.copyVideos(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads, progressBar);
                         } catch (IOException | InterruptedException e) {
                             e.printStackTrace();
