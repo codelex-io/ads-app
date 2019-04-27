@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 public class VideoCopier {
 
     public void videoCopier(File input, File output, List<Ad> ads) throws IOException, InterruptedException {
+
+
         File[] files = input.listFiles();
         Path vidPath = null;
         String outputPath = null;
@@ -35,14 +37,12 @@ public class VideoCopier {
                         assert vidPath != null;
                         outputPath = collect.get(0).toString() + "/" + file.getName();
                     }
-
                 }
             }
 
             assert vidPath != null;
             Files.copy(vidPath, Paths.get(outputPath));
             Thread.sleep(2000);
-
         }
     }
 }

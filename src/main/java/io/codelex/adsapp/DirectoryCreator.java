@@ -7,6 +7,7 @@ public class DirectoryCreator {
 
     public void directoryCreator(File directory, List<Ad> ads) {
 
+
         String created = "";
         int id = 1;
         String parentDirName = ads.get(0).getDate();
