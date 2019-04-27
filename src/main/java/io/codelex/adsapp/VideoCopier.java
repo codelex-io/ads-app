@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 
 public class VideoCopier {
 
-    public static double currentProgress;
+    private static double currentProgress;
 
     public void copyVideos(File input, File output, List<Ad> ads, ProgressBar progressBar) throws IOException, InterruptedException {
 
