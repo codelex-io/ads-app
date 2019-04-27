@@ -1,5 +1,8 @@
 package io.codelex.adsapp;
 
+import javafx.application.Platform;
+import javafx.scene.control.ProgressBar;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,12 +14,14 @@ import java.util.stream.Stream;
 
 public class VideoCopier {
 
-    public void videoCopier(File input, File output, List<Ad> ads) throws IOException, InterruptedException {
+    public static double currentProgress;
 
+    public void copyVideos(File input, File output, List<Ad> ads, ProgressBar progressBar) throws IOException, InterruptedException {
 
         File[] files = input.listFiles();
         Path vidPath = null;
         String outputPath = null;
+        double i = 0.0;
 
         for (Ad ad : ads) {
             String adId = ad.getAdvertisingName();
@@ -41,6 +46,9 @@ public class VideoCopier {
             assert vidPath != null;
             Files.copy(vidPath, Paths.get(outputPath));
             Thread.sleep(2000);
+            i++;
+            currentProgress = i / ads.size();
+            Platform.runLater(() -> progressBar.setProgress(currentProgress));
         }
     }
 }
