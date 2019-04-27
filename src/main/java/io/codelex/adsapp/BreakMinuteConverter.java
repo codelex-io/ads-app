@@ -11,6 +11,6 @@ class BreakMinuteConverter {
         int minutes = seconds / 60;
         int secondsLeft = seconds % 60;
         String format = decimalFormat.format(secondsLeft);
-        return minutes + ":" + format;
+        return minutes + "-" + format;
     }
 }
