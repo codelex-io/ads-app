@@ -22,6 +22,7 @@ public class Ui {
     private VideoValidator videoValidator = new VideoValidator();
     private DirectoryCreator directoryCreator = new DirectoryCreator();
     private VideoCopier videoCopier = new VideoCopier();
+    private ProgressBar progressBar = new ProgressBar();
 
     public void start(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -73,6 +74,11 @@ public class Ui {
         grid.getChildren().add(browseFile);
         grid.getChildren().add(directoryPath);
 
+        //Progress Bar
+        GridPane.setConstraints(progressBar, 0, 7);
+        grid.getChildren().add(progressBar);
+        progressBar.setMinWidth(300);
+
         Text actionIndicator = new Text("Waiting for input");
         GridPane.setConstraints(actionIndicator, 0, 6);
         grid.getChildren().add(actionIndicator);
@@ -106,11 +112,10 @@ public class Ui {
                     error.showAndWait();
                 } else {
                     Thread thread = new Thread(() -> {
+                        actionIndicator.setText("Copying videos...");
                         directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
                         try {
-                            actionIndicator.setText("Copying videos...");
-
-                            videoCopier.videoCopier(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads);
+                            videoCopier.copyVideos(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads, progressBar);
                         } catch (IOException | InterruptedException e) {
                             e.printStackTrace();
                         }
