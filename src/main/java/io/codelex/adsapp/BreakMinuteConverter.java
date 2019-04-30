@@ -10,7 +10,8 @@ class BreakMinuteConverter {
         int seconds = Integer.parseInt(time);
         int minutes = seconds / 60;
         int secondsLeft = seconds % 60;
-        String format = decimalFormat.format(secondsLeft);
-        return minutes + "-" + format;
+        String secondsFormatted = decimalFormat.format(secondsLeft);
+        String minutesFormatted = decimalFormat.format(minutes);
+        return minutesFormatted + "_" + secondsFormatted;
     }
 }
