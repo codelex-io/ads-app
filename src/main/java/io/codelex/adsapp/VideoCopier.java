@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -62,9 +63,17 @@ public class VideoCopier {
                     }
                 }
             }
+            try {
+                assert vidPath != null;
+                Files.copy(vidPath, Paths.get(outputPath));
+            } catch (FileAlreadyExistsException e) {
+                Text fileAlreadyExists = new Text("\nFile " + adId + " already exists in folder " + startTime);
+                fileAlreadyExists.setFill(Color.RED);
+                fileAlreadyExists.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+                Platform.runLater(() -> consoleList.add(fileAlreadyExists));
+                break;
+            }
 
-            assert vidPath != null;
-            Files.copy(vidPath, Paths.get(outputPath));
             Thread.sleep(2000);
             i++;
             Text currentVideoCopying = new Text("\n" + dtf.format(LocalTime.now()) + " Copying: " + adId + " to " + startTime);
