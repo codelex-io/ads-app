@@ -62,6 +62,7 @@ public class Ui {
         BrowseDirectory browseVideoFile = new BrowseDirectory(primaryStage).invoke();
         TextField videoFile = browseVideoFile.getTextField();
         Button browseVideo = browseVideoFile.getButton();
+        browseVideo.setMinWidth(71);
         mainController.setTxtVidPath(videoFile);
 
         GridPane.setConstraints(videoLabel, 0, 2);
@@ -75,6 +76,7 @@ public class Ui {
         BrowseDirectory browseDirectoryFile = new BrowseDirectory(primaryStage).invoke();
         TextField directoryPath = browseDirectoryFile.getTextField();
         Button browseFile = browseDirectoryFile.getButton();
+        browseFile.setMinWidth(71);
         mainController.setTxtDirectoryPath(directoryPath);
 
         GridPane.setConstraints(directoryLabel, 0, 4);

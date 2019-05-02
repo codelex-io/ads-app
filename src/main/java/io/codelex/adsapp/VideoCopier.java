@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.io.File;
@@ -31,6 +34,7 @@ public class VideoCopier {
                            ObservableList<Node> consoleList) throws IOException, InterruptedException {
 
         long start = System.nanoTime();
+        int loopCount = 0;
 
         File[] files = input.listFiles();
         Path vidPath = null;
@@ -67,9 +71,17 @@ public class VideoCopier {
             Platform.runLater(() -> consoleList.add(currentVideoCopying));
             currentProgress = i / ads.size();
             Platform.runLater(() -> progressBar.setProgress(currentProgress));
+            loopCount++;
         }
         long elapsedTime = System.nanoTime() - start;
-        Text done = new Text("\n Videos copied in " + elapsedTime/100000 + " seconds!");
+        Text done = new Text("\n" + loopCount + " out of " + ads.size() + " videos copied in " + elapsedTime / 1000000000 / 60 + " minutes and " + elapsedTime / 1000000000 % 60 + " seconds!");
+        if (loopCount < ads.size()) {
+            done.setFill(Color.RED);
+            done.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        } else {
+            done.setFill(Color.GREEN);
+            done.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+        }
         Platform.runLater(() -> consoleList.add(done));
     }
 }
