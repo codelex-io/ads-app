@@ -1,11 +1,18 @@
 package io.codelex.adsapp.ui;
 
 import io.codelex.adsapp.*;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -23,6 +30,8 @@ public class Ui {
     private DirectoryCreator directoryCreator = new DirectoryCreator();
     private VideoCopier videoCopier = new VideoCopier();
     private ProgressBar progressBar = new ProgressBar();
+    private TextFlow console = new TextFlow();
+    private ScrollPane scrollPane = new ScrollPane(console);
 
     public void start(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -34,6 +43,7 @@ public class Ui {
         final TextField csvFile = new TextField();
         csvFile.setPrefWidth(300);
         Button browseCsv = new Button("Select...");
+        browseCsv.setMinWidth(71);
         browseCsv.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv Files", "*.csv"));
@@ -52,6 +62,7 @@ public class Ui {
         BrowseDirectory browseVideoFile = new BrowseDirectory(primaryStage).invoke();
         TextField videoFile = browseVideoFile.getTextField();
         Button browseVideo = browseVideoFile.getButton();
+        browseVideo.setMinWidth(71);
         mainController.setTxtVidPath(videoFile);
 
         GridPane.setConstraints(videoLabel, 0, 2);
@@ -65,6 +76,7 @@ public class Ui {
         BrowseDirectory browseDirectoryFile = new BrowseDirectory(primaryStage).invoke();
         TextField directoryPath = browseDirectoryFile.getTextField();
         Button browseFile = browseDirectoryFile.getButton();
+        browseFile.setMinWidth(71);
         mainController.setTxtDirectoryPath(directoryPath);
 
         GridPane.setConstraints(directoryLabel, 0, 4);
@@ -75,16 +87,26 @@ public class Ui {
         grid.getChildren().add(directoryPath);
 
         //Progress Bar
+        Label progressLabel = new Label("Progress:");
+        GridPane.setConstraints(progressLabel, 0, 6);
         GridPane.setConstraints(progressBar, 0, 7);
         grid.getChildren().add(progressBar);
+        grid.getChildren().add(progressLabel);
         progressBar.setMinWidth(300);
 
-        Text actionIndicator = new Text("Waiting for input");
-        GridPane.setConstraints(actionIndicator, 0, 6);
-        grid.getChildren().add(actionIndicator);
+        //Console
+        Label consoleLabel = new Label("Log:");
+        GridPane.setConstraints(consoleLabel, 0, 8);
+        GridPane.setConstraints(scrollPane, 0, 9, 3, 1);
+        scrollPane.setMaxHeight(105);
+        scrollPane.setMinHeight(105);
+        scrollPane.vvalueProperty().bind(console.heightProperty());
+        grid.getChildren().add(scrollPane);
+        grid.getChildren().add(consoleLabel);
+        ObservableList<Node> consoleList = console.getChildren();
 
         Button exit = new Button("Exit");
-        GridPane.setConstraints(exit, 2, 7);
+        GridPane.setConstraints(exit, 2, 8);
         grid.getChildren().add(exit);
         exit.setMinWidth(71);
         exit.setDisable(true);
@@ -102,7 +124,11 @@ public class Ui {
             } else {
                 List<Ad> ads = csvReader.parseCsv(csvFile.getText());
                 List<String> vid = videoReader.inputVideos(mainController.getTxtVidPath());
-                String errorList = videoValidator.validate(ads, vid).stream().map(ValidationStatus::getMessage).collect(Collectors.joining("\n"));
+                String errorList = videoValidator
+                        .validate(ads, vid)
+                        .stream()
+                        .map(ValidationStatus::getMessage)
+                        .collect(Collectors.joining("\n"));
                 if (!errorList.isEmpty()) {
 
                     Alert error = new Alert(Alert.AlertType.WARNING);
@@ -115,14 +141,14 @@ public class Ui {
                         browseCsv.setDisable(true);
                         browseVideo.setDisable(true);
                         browseFile.setDisable(true);
-                        directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads);
+                        directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads, consoleList);
                         try {
-                            actionIndicator.setText("Copying videos...");
-                            videoCopier.copyVideos(mainController.getTxtVidPath(), mainController.getTxtDirectoryPath(), ads, progressBar);
+                            videoCopier.copyVideos(mainController.getTxtVidPath(),
+                                    mainController.getTxtDirectoryPath(),
+                                    ads, progressBar, consoleList);
                         } catch (IOException | InterruptedException e) {
                             e.printStackTrace();
                         }
-                        actionIndicator.setText("Done!");
                         exit.setDisable(false);
                     });
                     thread.setDaemon(true);
@@ -131,10 +157,10 @@ public class Ui {
             }
         });
 
-        GridPane.setConstraints(start, 2, 6);
+        GridPane.setConstraints(start, 2, 7);
         grid.getChildren().add(start);
 
-        Scene scene = new Scene(grid, 410, 270);
+        Scene scene = new Scene(grid, 410, 410);
         primaryStage.setTitle("Ads app");
         primaryStage.setScene(scene);
         primaryStage.show();
