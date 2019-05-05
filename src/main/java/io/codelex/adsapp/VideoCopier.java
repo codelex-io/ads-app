@@ -11,6 +11,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -57,33 +58,42 @@ public class VideoCopier {
                             2,
                             (path, basicFileAttributes) -> path.getFileName().toString().contains(startTime))) {
                         collect = pathStream.collect(Collectors.toList());
-
-                        assert vidPath != null;
                         outputPath = collect.get(0).toString() + "/" + file.getName();
                     }
                 }
             }
+            boolean noError = true;
+            assert vidPath != null;
             try {
-                assert vidPath != null;
                 Files.copy(vidPath, Paths.get(outputPath));
-            } catch (FileAlreadyExistsException e) {
-                Text fileAlreadyExists = new Text("\nFile " + adId + " already exists in folder " + startTime);
-                fileAlreadyExists.setFill(Color.RED);
-                fileAlreadyExists.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
-                Platform.runLater(() -> consoleList.add(fileAlreadyExists));
-                break;
+            } catch (Exception e) {
+                Text fileNotFound = new Text("\nFile " + adId + " not copied to folder " + startTime);
+                fileNotFound.setFill(Color.RED);
+                fileNotFound.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+                Platform.runLater(() -> consoleList.add(fileNotFound));
+                noError = false;
             }
 
-            Thread.sleep(2000);
-            i++;
-            Text currentVideoCopying = new Text("\n" + dtf.format(LocalTime.now()) + " Copying: " + adId + " to " + startTime);
-            Platform.runLater(() -> consoleList.add(currentVideoCopying));
-            currentProgress = i / ads.size();
-            Platform.runLater(() -> progressBar.setProgress(currentProgress));
-            loopCount++;
+            if (noError) {
+//                Thread.sleep(2000);
+                i++;
+                Text currentVideoCopying = new Text("\n"
+                        + dtf.format(LocalTime.now()) + " Copying: "
+                        + adId + " to "
+                        + startTime);
+                Platform.runLater(() -> consoleList.add(currentVideoCopying));
+                currentProgress = i / ads.size();
+                Platform.runLater(() -> progressBar.setProgress(currentProgress));
+                loopCount++;
+            }
         }
+
         long elapsedTime = System.nanoTime() - start;
-        Text done = new Text("\n" + loopCount + " out of " + ads.size() + " videos copied in " + elapsedTime / 1000000000 / 60 + " minutes and " + elapsedTime / 1000000000 % 60 + " seconds!");
+        Text done = new Text("\n"
+                + loopCount + " out of "
+                + ads.size() + " videos copied in "
+                + elapsedTime / 1000000000 / 60 + " minutes and "
+                + elapsedTime / 1000000000 % 60 + " seconds!");
         if (loopCount < ads.size()) {
             done.setFill(Color.RED);
             done.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));

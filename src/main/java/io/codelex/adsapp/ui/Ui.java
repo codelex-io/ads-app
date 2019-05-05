@@ -135,25 +135,26 @@ public class Ui {
                     error.setHeaderText("Videos missing");
                     error.setContentText(null);
                     error.getDialogPane().setContent(new TextArea(errorList));
-                    error.showAndWait();
-                } else {
-                    Thread thread = new Thread(() -> {
-                        browseCsv.setDisable(true);
-                        browseVideo.setDisable(true);
-                        browseFile.setDisable(true);
-                        directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads, consoleList);
-                        try {
-                            videoCopier.copyVideos(mainController.getTxtVidPath(),
-                                    mainController.getTxtDirectoryPath(),
-                                    ads, progressBar, consoleList);
-                        } catch (IOException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        exit.setDisable(false);
-                    });
-                    thread.setDaemon(true);
-                    thread.start();
+                    error.show();
                 }
+
+                Thread thread = new Thread(() -> {
+                    browseCsv.setDisable(true);
+                    browseVideo.setDisable(true);
+                    browseFile.setDisable(true);
+                    directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads, consoleList);
+                    try {
+                        videoCopier.copyVideos(mainController.getTxtVidPath(),
+                                mainController.getTxtDirectoryPath(),
+                                ads, progressBar, consoleList);
+                    } catch (IOException | InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    exit.setDisable(false);
+                });
+                thread.setDaemon(true);
+                thread.start();
+
             }
         });
 
