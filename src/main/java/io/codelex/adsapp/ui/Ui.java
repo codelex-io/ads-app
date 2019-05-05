@@ -1,6 +1,7 @@
 package io.codelex.adsapp.ui;
 
 import io.codelex.adsapp.*;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -12,6 +13,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -19,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Ui {
@@ -32,6 +35,8 @@ public class Ui {
     private ProgressBar progressBar = new ProgressBar();
     private TextFlow console = new TextFlow();
     private ScrollPane scrollPane = new ScrollPane(console);
+
+    private boolean inputOnError = true;
 
     public void start(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -116,6 +121,7 @@ public class Ui {
         start.setMinWidth(71);
         start.setOnAction(event -> {
             start.setDisable(true);
+
             if (videoFile.getText().isEmpty() || csvFile.getText().isEmpty() || directoryPath.getText().isEmpty()) {
                 Alert fail = new Alert(Alert.AlertType.WARNING);
                 fail.setHeaderText(null);
@@ -129,34 +135,48 @@ public class Ui {
                         .stream()
                         .map(ValidationStatus::getMessage)
                         .collect(Collectors.joining("\n"));
-                if (!errorList.isEmpty()) {
 
+                if (!errorList.isEmpty()) {
                     Alert error = new Alert(Alert.AlertType.WARNING);
-                    error.setHeaderText("Videos missing");
+                    error.setHeaderText("Videos missing. Copy anyway?");
                     error.setContentText(null);
                     error.getDialogPane().setContent(new TextArea(errorList));
-                    error.show();
-                }
 
-                Thread thread = new Thread(() -> {
-                    browseCsv.setDisable(true);
-                    browseVideo.setDisable(true);
-                    browseFile.setDisable(true);
-                    directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads, consoleList);
-                    try {
-                        videoCopier.copyVideos(mainController.getTxtVidPath(),
-                                mainController.getTxtDirectoryPath(),
-                                ads, progressBar, consoleList);
-                    } catch (IOException | InterruptedException e) {
-                        e.printStackTrace();
+                    ButtonType yesButton = new ButtonType("Yes");
+                    ButtonType noButton = new ButtonType("No");
+
+                    error.getButtonTypes().clear();
+                    error.getButtonTypes().addAll(yesButton, noButton);
+                    Optional<ButtonType> option = error.showAndWait();
+
+                    if (option.get() == noButton) {
+                        Text cancel = new Text("Copying canceled by user");
+                        Platform.runLater(() -> consoleList.add(cancel));
+                        inputOnError = false;
+                        start.setDisable(false);
                     }
-                    exit.setDisable(false);
-                });
-                thread.setDaemon(true);
-                thread.start();
-
+                }
+                if (inputOnError) {
+                    Thread thread = new Thread(() -> {
+                        browseCsv.setDisable(true);
+                        browseVideo.setDisable(true);
+                        browseFile.setDisable(true);
+                        directoryCreator.directoryCreator(mainController.getTxtDirectoryPath(), ads, consoleList);
+                        try {
+                            videoCopier.copyVideos(mainController.getTxtVidPath(),
+                                    mainController.getTxtDirectoryPath(),
+                                    ads, progressBar, consoleList);
+                        } catch (IOException | InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        exit.setDisable(false);
+                    });
+                    thread.setDaemon(true);
+                    thread.start();
+                }
             }
         });
+
 
         GridPane.setConstraints(start, 2, 7);
         grid.getChildren().add(start);
