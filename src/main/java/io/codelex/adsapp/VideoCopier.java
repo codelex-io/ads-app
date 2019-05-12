@@ -4,22 +4,17 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,6 +32,7 @@ public class VideoCopier {
 
         long start = System.nanoTime();
         int loopCount = 0;
+        Set notCopied = new HashSet<>();
 
         File[] files = input.listFiles();
         Path vidPath = null;
@@ -69,9 +65,9 @@ public class VideoCopier {
             } catch (Exception e) {
                 Text fileNotFound = new Text("\nFile " + adId + " not copied to folder " + startTime);
                 fileNotFound.setFill(Color.RED);
-                fileNotFound.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
                 Platform.runLater(() -> consoleList.add(fileNotFound));
                 noError = false;
+                notCopied.add(adId);
             }
 
             if (noError) {
@@ -87,7 +83,7 @@ public class VideoCopier {
                 loopCount++;
             }
         }
-
+        Platform.runLater(() -> progressBar.setProgress(1));
         long elapsedTime = System.nanoTime() - start;
         Text done = new Text("\n"
                 + loopCount + " out of "
@@ -96,10 +92,11 @@ public class VideoCopier {
                 + elapsedTime / 1000000000 % 60 + " seconds!");
         if (loopCount < ads.size()) {
             done.setFill(Color.RED);
-            done.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
+            Text notCopiedVideos = new Text("\nFollowing videos not copied: " + Arrays.toString(notCopied.toArray()));
+            notCopiedVideos.setFill(Color.RED);
+            Platform.runLater(() -> consoleList.add(notCopiedVideos));
         } else {
             done.setFill(Color.GREEN);
-            done.setFont(Font.font("Helvetica", FontWeight.BOLD, 12));
         }
         Platform.runLater(() -> consoleList.add(done));
     }

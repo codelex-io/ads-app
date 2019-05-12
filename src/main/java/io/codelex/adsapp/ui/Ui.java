@@ -51,7 +51,8 @@ public class Ui {
         browseCsv.setMinWidth(71);
         browseCsv.setOnAction(event -> {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Csv Files", "*.csv"));
+            fileChooser.getExtensionFilters()
+                    .add(new FileChooser.ExtensionFilter("Csv Files", "*.csv"));
             File selectedCsvDirectory = fileChooser.showOpenDialog(primaryStage);
             csvFile.setText(selectedCsvDirectory.getAbsolutePath());
         });
@@ -155,6 +156,7 @@ public class Ui {
                         Platform.runLater(() -> consoleList.add(cancel));
                         inputOnError = false;
                         start.setDisable(false);
+                        ads.clear();
                     }
                 }
                 if (inputOnError) {
@@ -178,7 +180,6 @@ public class Ui {
             }
         });
 
-
         GridPane.setConstraints(start, 2, 7);
         grid.getChildren().add(start);
 
@@ -192,3 +193,7 @@ public class Ui {
         primaryStage.close();
     }
 }
+
+
+
+//Todo apakšā izprintēt nepārkopētos

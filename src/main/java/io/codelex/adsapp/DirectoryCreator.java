@@ -15,8 +15,8 @@ public class DirectoryCreator {
 
     public void directoryCreator(File directory, List<Ad> ads, ObservableList consoleList) {
 
-        Text text2 = new Text(dtf.format(LocalTime.now()) + " Creating directories");
-        Platform.runLater(() -> consoleList.add(text2));
+        Text create = new Text(dtf.format(LocalTime.now()) + " Creating directories");
+        Platform.runLater(() -> consoleList.add(create));
 
         String created = "";
         int id = 1;
