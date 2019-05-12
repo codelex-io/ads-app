@@ -36,7 +36,7 @@ public class Ui {
     private TextFlow console = new TextFlow();
     private ScrollPane scrollPane = new ScrollPane(console);
 
-    private boolean inputOnError = true;
+    private boolean inputOnError;
 
     public void start(Stage primaryStage) {
         GridPane grid = new GridPane();
@@ -121,6 +121,7 @@ public class Ui {
         start.setMinWidth(71);
         start.setOnAction(event -> {
             start.setDisable(true);
+            inputOnError = true;
 
             if (videoFile.getText().isEmpty() || csvFile.getText().isEmpty() || directoryPath.getText().isEmpty()) {
                 Alert fail = new Alert(Alert.AlertType.WARNING);
@@ -150,7 +151,7 @@ public class Ui {
                     Optional<ButtonType> option = error.showAndWait();
 
                     if (option.get() == noButton) {
-                        Text cancel = new Text("Copying canceled by user");
+                        Text cancel = new Text("Copying canceled by user\n");
                         Platform.runLater(() -> consoleList.add(cancel));
                         inputOnError = false;
                         start.setDisable(false);

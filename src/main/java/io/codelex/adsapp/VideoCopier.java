@@ -75,7 +75,7 @@ public class VideoCopier {
             }
 
             if (noError) {
-                Thread.sleep(2000);
+//                Thread.sleep(2000);
                 i++;
                 Text currentVideoCopying = new Text("\n"
                         + dtf.format(LocalTime.now()) + " Copying: "
